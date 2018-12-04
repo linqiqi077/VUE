@@ -6,14 +6,25 @@ const path = require('path')
 
 module.exports = {
   dev: {
+    proxyTable: {
+      '/api': {
+        target: 'http://localhost:3000',
+        // 需要请求的地址
+        changeOrigin: true,
+        // 是否跨域
+        pathRewrite: {
+          '^/api': '/'
+          // 替换target中的请求地址,例如请求的时候把'/login'换成'/mock/login'
+        }
+      }
+    },
 
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '192.168.10.125', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
