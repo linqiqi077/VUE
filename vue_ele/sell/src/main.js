@@ -6,6 +6,7 @@ import router from './router';
 
 // 样式的引入
 import './common/stylus/index.styl';
+// import header from './components/header/header.vue';
 
 Vue.config.productionTip = false;
 

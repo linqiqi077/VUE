@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <v-header></v-header>
+    <v-header :seller="seller"></v-header>
     <div class="tab border-1px">
       <div class="tab-item">
         <router-link to="/goods">商品</router-link>
@@ -19,7 +19,23 @@
 <script>
 import header from './components/header/header.vue';
 import 'vue-router';
+import axios from 'axios';
+
+const ERR_OK = 0;
 export default {
+  data () {
+    return {
+      seller: {}
+    };
+  },
+  created () {
+    axios.get('http://192.168.10.125:8080/api/seller')
+    .then((res) => {
+      if (res.data.errno === ERR_OK) {
+        this.seller = res.data.data;
+      };
+    });
+  },
   components: {
     'v-header': header
   }
