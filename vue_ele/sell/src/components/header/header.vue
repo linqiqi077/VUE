@@ -223,6 +223,7 @@ export default {
     height 100%
     overflow auto
     background-color rgba(7, 17, 27 , 0.8)
+    backdrop-filter blur(10px)
     .detail-wrapper
       min-height 100%
       width 100%
