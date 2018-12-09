@@ -4,6 +4,7 @@
       <ul>
         <li v-for="(item,index) in goods" :key="index" class="menu-item"
         :class="{'current': currentIndex === index}"
+        @click="selectMenu(index,$event)"
         >
             <span class="text border-1px">
               <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{ item.name }}
@@ -88,8 +89,10 @@ export default {
   },
   methods: {
     _initScroll () {
-      // vue里面获取dom对象
-      this.meunScroll = new BScroll(this.$refs.menuWrapper);
+      // vue里面获取dom对象,better-scroll会封装一些普通操作事件，如果需要启动，则需要传参
+      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      });
       this.foodScroll = new BScroll(this.$refs.foodWrapper, {
         probeType: 3
       });
@@ -110,6 +113,15 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       };
+    },
+    selectMenu (index, event) {
+      // 浏览器自带的事件没有_constructed 这个属性，better-scroll组件派发的事件带有_constructed属性
+      if (!event._constructed) {
+        return;
+      };
+      let foodList = this.$refs.foodWrapper.querySelectorAll('.food-list-hook');
+      let el = foodList[index];
+      this.foodScroll.scrollToElement(el, 300);
     }
   }
 };
